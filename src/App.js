@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Table from "./Table";
 
 function App() {
+  const [show, setShow] = useState(false);
+  const [columns, setColumns] = useState(8);
+  const [tableChanges, setTableChanges] = useState(1);
+  const [countRenders, setCountRenders] = useState(0);
+
+  const render = () => {
+    setCountRenders(countRenders + 1);
+  };
+
+  const toggleTable = () => {
+    setShow(!show);
+    setTableChanges(tableChanges + 1);
+  };
+
+  const addColumn = () => {
+    setColumns(columns + 1);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => render(render + 1)}>Render</button>
+      <button onClick={() => toggleTable()}>Toggle table</button>
+      <button onClick={() => toggleTable()}>Update table</button>
+      <button onClick={() => addColumn()}>Add column</button>
+      <span>Columns: {columns}</span>
+
+      <Table show={show} columns={columns} rows={1000} changes={tableChanges} />
     </div>
   );
 }
